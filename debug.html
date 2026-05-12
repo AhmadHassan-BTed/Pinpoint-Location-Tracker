@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHADOW | PINPOINT v2.6.0</title>
+    <title>TERMINAL | ZERO_COUPLING v3.2.0</title>
     <style>
-        :root { --cyber-green: #00ff41; --bg-black: #000; --card-bg: #030303; --cyber-red: #ff003c; }
+        :root { --cyber-green: #00ff41; --cyber-yellow: #ffcc00; --cyber-red: #ff003c; --cyber-purple: #9d00ff; --bg-black: #000; --card-bg: #030303; }
         body {
             background-color: var(--bg-black); color: var(--cyber-green);
             font-family: 'JetBrains Mono', monospace; margin: 0; padding: 30px;
-            zoom: 1.2;
+            zoom: 1.1;
             background-image: linear-gradient(rgba(0, 255, 65, 0.02) 1px, transparent 1px),
                               linear-gradient(90deg, rgba(0, 255, 65, 0.02) 1px, transparent 1px);
             background-size: 50px 50px;
@@ -19,33 +19,59 @@
             background: var(--card-bg); box-shadow: 0 0 30px rgba(0, 255, 65, 0.05);
             display: flex; justify-content: space-between; align-items: center;
         }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 30px; }
-        .cyber-card {
-            border: 1px solid rgba(0, 255, 65, 0.15); background: var(--card-bg);
-            padding: 25px; display: flex; flex-direction: column; height: 350px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
+        .threat-section { margin-bottom: 60px; }
+        .threat-header {
+            font-size: 14px; font-weight: bold; letter-spacing: 5px; margin-bottom: 25px;
+            padding: 10px; border-left: 5px solid transparent; text-transform: uppercase;
         }
-        .cyber-card:hover { transform: scale(1.02); border-color: var(--cyber-green); box-shadow: 0 10px 40px rgba(0, 255, 65, 0.15); z-index: 10; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px; }
+        .cyber-card {
+            background: var(--card-bg); padding: 25px; display: flex; flex-direction: column; 
+            height: 320px; transition: 0.3s; position: relative; border: 1px solid;
+        }
+        .cyber-card:hover { transform: scale(1.02); z-index: 10; }
         .terminal-output {
-            background: #000; border: 1px solid rgba(0, 255, 65, 0.05);
-            padding: 15px; font-size: 12px; color: var(--cyber-green);
-            flex: 1; overflow-y: auto; word-break: break-all; white-space: pre-wrap;
-            line-height: 1.5;
+            background: #000; border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 15px; font-size: 11px; flex: 1; overflow-y: auto; 
+            word-break: break-all; white-space: pre-wrap; line-height: 1.5;
         }
         .cyber-btn {
-            background: rgba(0, 255, 65, 0.05); border: 1px solid var(--cyber-green);
-            color: var(--cyber-green); padding: 6px 15px; font-size: 10px;
-            font-weight: bold; text-transform: uppercase; cursor: pointer; transition: 0.2s;
+            background: transparent; border: 1px solid;
+            padding: 6px 15px; font-size: 10px; font-weight: bold; 
+            text-transform: uppercase; cursor: pointer; transition: 0.2s;
         }
-        .cyber-btn:hover { background: var(--cyber-green); color: #000; box-shadow: 0 0 20px var(--cyber-green); }
         .info-btn {
-            width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--cyber-green);
-            color: var(--cyber-green); display: flex; align-items: center; justify-content: center;
-            font-size: 12px; font-weight: bold; cursor: pointer; opacity: 0.5; transition: 0.3s;
-            margin-right: 10px;
+            width: 24px; height: 24px; border-radius: 50%; border: 1px solid;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: bold; cursor: pointer; opacity: 0.6; margin-right: 10px;
         }
-        .info-btn:hover { opacity: 1; background: var(--cyber-green); color: #000; }
+
+        .lvl-1 { border-color: rgba(0, 255, 65, 0.2); color: var(--cyber-green); }
+        .lvl-1 .threat-header { border-color: var(--cyber-green); background: rgba(0, 255, 65, 0.05); color: var(--cyber-green); }
+        .lvl-1 .cyber-card { border-color: rgba(0, 255, 65, 0.15); }
+        .lvl-1 .cyber-btn, .lvl-1 .info-btn { border-color: var(--cyber-green); color: var(--cyber-green); }
+        .lvl-1 .cyber-btn:hover, .lvl-1 .info-btn:hover { background: var(--cyber-green); color: #000; }
+
+        .lvl-2 { border-color: rgba(255, 204, 0, 0.2); color: var(--cyber-yellow); }
+        .lvl-2 .threat-header { border-color: var(--cyber-yellow); background: rgba(255, 204, 0, 0.05); color: var(--cyber-yellow); }
+        .lvl-2 .cyber-card { border-color: rgba(255, 204, 0, 0.15); }
+        .lvl-2 .cyber-btn, .lvl-2 .info-btn { border-color: var(--cyber-yellow); color: var(--cyber-yellow); }
+        .lvl-2 .cyber-btn:hover, .lvl-2 .info-btn:hover { background: var(--cyber-yellow); color: #000; }
+        .lvl-2 .terminal-output { color: var(--cyber-yellow); }
+
+        .lvl-3 { border-color: rgba(255, 0, 60, 0.2); color: var(--cyber-red); }
+        .lvl-3 .threat-header { border-color: var(--cyber-red); background: rgba(255, 0, 60, 0.05); color: var(--cyber-red); }
+        .lvl-3 .cyber-card { border-color: rgba(255, 0, 60, 0.15); }
+        .lvl-3 .cyber-btn, .lvl-3 .info-btn { border-color: var(--cyber-red); color: var(--cyber-red); }
+        .lvl-3 .cyber-btn:hover, .lvl-3 .info-btn:hover { background: var(--cyber-red); color: #fff; }
+        .lvl-3 .terminal-output { color: var(--cyber-red); }
+
+        .lvl-4 { border-color: rgba(157, 0, 255, 0.2); color: var(--cyber-purple); }
+        .lvl-4 .threat-header { border-color: var(--cyber-purple); background: rgba(157, 0, 255, 0.05); color: var(--cyber-purple); }
+        .lvl-4 .cyber-card { border-color: rgba(157, 0, 255, 0.25); }
+        .lvl-4 .cyber-btn, .lvl-4 .info-btn { border-color: var(--cyber-purple); color: var(--cyber-purple); }
+        .lvl-4 .cyber-btn:hover, .lvl-4 .info-btn:hover { background: var(--cyber-purple); color: #fff; }
+        .lvl-4 .terminal-output { color: var(--cyber-purple); }
 
         #modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -53,226 +79,48 @@
             align-items: center; justify-content: center; backdrop-filter: blur(5px);
         }
         .modal-content {
-            width: 90%; max-width: 650px; background: #050505; border: 1px solid var(--cyber-red);
-            padding: 40px; position: relative; box-shadow: 0 0 50px rgba(255, 0, 60, 0.2);
+            width: 90%; max-width: 650px; background: #050505; border: 1px solid;
+            padding: 40px; box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
-        .modal-title { color: var(--cyber-red); font-size: 18px; font-weight: bold; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 5px; border-bottom: 1px solid var(--cyber-red); padding-bottom: 10px; }
-        .modal-body { font-size: 13px; line-height: 1.8; color: #ccc; }
-        .risk-step-label { color: var(--cyber-red); font-weight: bold; margin-top: 25px; margin-bottom: 15px; display: block; text-transform: uppercase; letter-spacing: 2px; }
-        .steps-list { list-style: none; padding: 0; margin: 0; }
-        .steps-list li { margin-bottom: 12px; padding-left: 25px; position: relative; }
-        .steps-list li::before { content: "▶"; position: absolute; left: 0; color: var(--cyber-red); font-size: 10px; top: 2px; }
-        .close-modal { position: absolute; top: 20px; right: 20px; color: #666; cursor: pointer; font-size: 20px; }
-        .close-modal:hover { color: #fff; }
-        .critical { border-color: var(--cyber-red) !important; }
-        .critical span { color: var(--cyber-red) !important; }
-        .critical .info-btn { border-color: var(--cyber-red); color: var(--cyber-red); }
+        .steps-list { list-style: none; padding: 0; margin: 15px 0; }
+        .steps-list li { margin-bottom: 12px; padding-left: 25px; position: relative; font-size: 13px; color: #ccc; }
+        .steps-list li::before { content: "▶"; position: absolute; left: 0; }
+
+        .m-lvl-1 { border-color: var(--cyber-green) !important; }
+        .m-lvl-1 .m-accent { color: var(--cyber-green); }
+        .m-lvl-2 { border-color: var(--cyber-yellow) !important; }
+        .m-lvl-2 .m-accent { color: var(--cyber-yellow); }
+        .m-lvl-3 { border-color: var(--cyber-red) !important; }
+        .m-lvl-3 .m-accent { color: var(--cyber-red); }
+        .m-lvl-4 { border-color: var(--cyber-purple) !important; }
+        .m-lvl-4 .m-accent { color: var(--cyber-purple); }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div id="modal-overlay" onclick="window.closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-modal" onclick="window.closeModal()">&times;</span>
-            <div class="modal-title" id="m-title">SECURITY_BRIEFING</div>
-            <div class="modal-body" id="m-body"></div>
+        <div id="modal-box" class="modal-content" onclick="event.stopPropagation()">
+            <div id="m-title" class="m-accent" style="font-size: 18px; font-weight: bold; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 5px;"></div>
+            <div id="m-body"></div>
         </div>
     </div>
 
     <header class="header">
         <div>
             <h1 style="margin:0; letter-spacing: 10px; font-size: 1.8rem; font-weight: 700;">PINPOINT_SHADOW</h1>
-            <div style="font-size: 9px; margin-top: 5px; color: rgba(0, 255, 65, 0.5); letter-spacing: 2px;">
-                SECURITY_LAB // LEVEL_4_CLEARANCE // v2.6.0
-            </div>
+            <span style="font-size: 10px; opacity: 0.5;">ZERO_COUPLING // SESSION_v3.2</span>
         </div>
-        <div style="text-align: right;">
-            <div style="font-size: 9px; opacity: 0.4; margin-bottom: 10px;">NODE_ID: AX-7792_SHADOW</div>
-            <a href="index.html" class="cyber-btn" style="text-decoration: none;">ABORT_SESSION</a>
-        </div>
+        <a href="index.html" class="cyber-btn" style="border-color: var(--cyber-green); color: var(--cyber-green);">EXIT</a>
     </header>
 
-    <div class="grid">
-        <script>
-            const RISK_DB = {
-                location: {
-                    info: "Real-time high-precision coordinates (Latitude/Longitude).",
-                    steps: [
-                        "Capture high-accuracy GPS telemetry from the browser API.",
-                        "Initialize real-world physical surveillance of the target's location.",
-                        "Correlate coordinates with known office/home locations for physical breach."
-                    ]
-                },
-                address: {
-                    info: "Human-readable civic address (Street, City, Postcode).",
-                    steps: [
-                        "Reverse geocode coordinates into a primary street address.",
-                        "Launch targeted physical social engineering (e.g., fraudulent package delivery).",
-                        "Verify physical identity against public property/electoral records."
-                    ]
-                },
-                storage: {
-                    info: "Session Tokens (JWT), Auth Cookies, and exposed PII (Emails/Keys).",
-                    steps: [
-                        "Audit LocalStorage and Cookies for unprotected 'Bearer' or 'id_token' strings.",
-                        "Hijack active user sessions using 'Pass-the-Cookie' techniques (No password needed).",
-                        "Gain persistent access to sensitive cloud accounts (Account Takeover)."
-                    ]
-                },
-                lan_scan: {
-                    info: "Internal LAN topology and open infrastructure services.",
-                    steps: [
-                        "Map the local network structure (Subnets and Gateways).",
-                        "Probe for open management ports (SSH/RDP) on internal workstations/NAS.",
-                        "Execute lateral movement to compromise servers behind the corporate firewall."
-                    ]
-                },
-                social: {
-                    info: "Active social media login states (Facebook, Google, LinkedIn).",
-                    steps: [
-                        "Detect currently authenticated platforms via image-loading side-channels.",
-                        "De-anonymize random visitors by linking them to their real-world social profiles.",
-                        "Prepare high-conversion spear-phishing based on the user's social ecosystem."
-                    ]
-                },
-                webrtc: {
-                    info: "Real Private Internal IP Address (Bypassing VPN/Proxy).",
-                    steps: [
-                        "Execute WebRTC STUN query to leak the target's local LAN IP.",
-                        "Bypass VPN/Proxy anonymity to identify the target's real workstation.",
-                        "Create a unique hardware-network fingerprint that persists across IP changes."
-                    ]
-                },
-                clipboard: {
-                    info: "Real-time access to the user's clipboard buffer.",
-                    steps: [
-                        "Monitor the clipboard for sensitive patterns (Passwords, Keys, Crypto-Addresses).",
-                        "Modify the buffer on-the-fly to redirect financial transactions (Pastejacking).",
-                        "Exfiltrate copied clear-text credentials directly to a C2 server."
-                    ]
-                },
-                fingerprint: {
-                    info: "Unique hardware/driver hash (Canvas Rendering Profile).",
-                    steps: [
-                        "Generate a unique machine ID based on GPU/Driver rendering artifacts.",
-                        "Track the target across all websites even if they clear cookies or use a VPN.",
-                        "Associate all anonymous activity with a single, permanent Hardware ID."
-                    ]
-                }
-            };
-
-            function createCard(id, title, isCritical = false) {
-                document.write(`
-                    <div class="cyber-card ${isCritical ? 'critical' : ''}">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(0, 255, 65, 0.1); padding-bottom: 12px;">
-                            <div style="display: flex; align-items: center;">
-                                <div class="info-btn" onclick="window.showRisk('${id}')">i</div>
-                                <span style="font-size: 10px; font-weight: bold; letter-spacing: 3px;">${title}</span>
-                            </div>
-                            <button onclick="window.runModule('${id}')" class="cyber-btn">EXEC</button>
-                        </div>
-                        <pre id="field-${id}" class="terminal-output">_AWAITING_COMMAND...</pre>
-                    </div>
-                `);
-            }
-
-            createCard('location', 'Geospatial_Fix');
-            createCard('address', 'Civic_Locator');
-            createCard('network', 'Net_Uplink');
-            createCard('webrtc', 'Internal_Leak');
-            createCard('fingerprint', 'Hardware_Hash');
-            createCard('storage', 'Deep_Token_Hunt', true);
-            createCard('lan_scan', 'Srv_Discovery', true);
-            createCard('social', 'Identity_Trace', true);
-            createCard('metadata', 'Env_Telemetry');
-            createCard('media', 'HW_Enumerate');
-            createCard('permissions', 'Access_Audit');
-            createCard('battery', 'Pwr_Analytics');
-            createCard('performance', 'Node_Health');
-            createCard('clipboard', 'Buffer_Audit');
-            createCard('fonts', 'Software_Profile');
-        </script>
-    </div>
+    <div id="sections-container"></div>
 
     <script type="module">
-        import { extractLocation } from './src/telemetry.js';
-        import { extractMetadata } from './src/metadata.js';
-        import { resolvePublicIP, extractConnectionInfo } from './src/network.js';
-        import { extractBatteryStatus } from './src/battery.js';
-        import { extractPerformanceMetrics } from './src/performance.js';
-        import { resolveAddress } from './src/geocoder.js';
-        import { extractBrowserStorage, auditIdentityMarkers } from './src/storage.js';
-        import { extractCanvasFingerprint } from './src/render-core.js';
-        import { extractInternalIPs } from './src/webrtc.js';
-        import { auditPermissions } from './src/permissions.js';
-        import { enumerateDevices } from './src/media_devices.js';
-        import { checkClipboardSecurity } from './src/clipboard_auditor.js';
-        import { auditSocialLogins } from './src/social_audit.js';
-        import { probeLocalNetwork } from './src/network_scan.js';
-        import { extractFontProfile } from './src/font_fingerprint.js';
-
-        async function typeWriter(element, text) {
-            element.innerText = "";
-            const lines = text.split('\n');
-            for (let line of lines) {
-                element.innerText += line + '\n';
-                element.scrollTop = element.scrollHeight;
-                await new Promise(r => setTimeout(r, 10));
-            }
-        }
-
-        window.showRisk = (id) => {
-            const risk = RISK_DB[id] || { info: "Critical telemetry.", steps: ["Extract data.", "Establish fingerprint.", "Monitor session."] };
-            document.getElementById('m-title').innerText = `EXPLOIT_PATH: ${id.toUpperCase()}`;
-            
-            let stepsHtml = '<ul class="steps-list">';
-            risk.steps.forEach(step => {
-                stepsHtml += `<li>${step}</li>`;
-            });
-            stepsHtml += '</ul>';
-
-            document.getElementById('m-body').innerHTML = `
-                <p><b>INFORMATION EXPOSED:</b><br>${risk.info}</p>
-                <span class="risk-step-label">ACTUAL HACKING STEPS:</span>
-                ${stepsHtml}
-            `;
-            document.getElementById('modal-overlay').style.display = 'flex';
-        };
-
+        import { PinpointEngine } from './src/core/engine.js';
         window.closeModal = () => { document.getElementById('modal-overlay').style.display = 'none'; };
-
-        window.runModule = async (module) => {
-            const field = document.getElementById(`field-${module}`);
-            if (!field) return;
-            field.innerText = ">> CONNECTING_VECTORS...\n>> EXPLOITING_API_SURFACE...";
-            field.style.color = "#00ff41";
-            try {
-                let data;
-                switch(module) {
-                    case 'location': data = await extractLocation(); break;
-                    case 'network': data = { ip: await resolvePublicIP(), ...extractConnectionInfo() }; break;
-                    case 'metadata': data = extractMetadata(); break;
-                    case 'battery': data = await extractBatteryStatus(); break;
-                    case 'performance': data = extractPerformanceMetrics(); break;
-                    case 'address': const loc = await extractLocation(); data = await resolveAddress(loc.latitude, loc.longitude); break;
-                    case 'storage': data = auditIdentityMarkers(); break;
-                    case 'fingerprint': data = extractCanvasFingerprint(); break;
-                    case 'webrtc': data = await extractInternalIPs(); break;
-                    case 'permissions': data = await auditPermissions(); break;
-                    case 'media': data = await enumerateDevices(); break;
-                    case 'clipboard': data = await checkClipboardSecurity(); break;
-                    case 'social': data = await auditSocialLogins(); break;
-                    case 'lan_scan': data = await probeLocalNetwork(); break;
-                    case 'fonts': data = extractFontProfile(); break;
-                }
-                const output = ">> ACCESS_GRANTED\n>> DATA_RECOVERED:\n" + JSON.stringify(data, null, 2);
-                await typeWriter(field, output);
-            } catch (error) {
-                field.style.color = "#ff003c";
-                field.innerText = ">> CRITICAL_FAIL\n>> " + error.message;
-            }
-        };
+        
+        // BOOTSTRAP THE FRAMEWORK
+        PinpointEngine.bootstrap();
     </script>
 </body>
 </html>
