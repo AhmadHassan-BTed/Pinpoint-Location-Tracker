@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-black text-cyber-green font-mono selection:bg-cyber-green selection:text-black;
+    /* Dimmed Grid for deeper dark vibe */
+    background-image: 
+      linear-gradient(rgba(0, 255, 65, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 65, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}
+
+@layer components {
+  .cyber-border {
+    @apply border border-cyber-green/20 bg-[#020202] backdrop-blur-xl relative overflow-hidden shadow-[0_0_30px_rgba(0,0,0,1)];
+  }
+  
+  .cyber-border::before {
+    content: "";
+    @apply absolute top-0 left-0 w-full h-[1px] bg-cyber-green/30 shadow-[0_0_10px_#00ff41];
+  }
+
+  .cyber-button {
+    @apply bg-black border border-cyber-green/40 text-cyber-green/80 px-3 py-1.5 text-[9px] uppercase font-bold tracking-[0.2em] transition-all hover:bg-cyber-green hover:text-black hover:shadow-[0_0_15px_#00ff41] active:scale-95;
+  }
+
+  .terminal-field {
+    /* CRITICAL FIX: Overflow and Wrapping */
+    @apply bg-black/90 border border-cyber-green/10 p-4 text-[10px] leading-tight overflow-x-hidden overflow-y-auto break-all whitespace-pre-wrap;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 1);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 255, 65, 0.1) transparent;
+  }
+}
+
+/* Enhanced Scanline */
+body::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), 
+              linear-gradient(90deg, rgba(255, 0, 0, 0.01), rgba(0, 255, 0, 0.005), rgba(0, 0, 255, 0.01));
+  z-index: 100;
+  background-size: 100% 4px, 4px 100%;
+  pointer-events: none;
+  opacity: 0.8;
+}

@@ -1,0 +1,26 @@
+{
+  "name": "bs-recipes",
+  "version": "1.3.4",
+  "description": "Fully working project examples showing how to use BrowserSync in various ways",
+  "repository": "BrowserSync/recipes",
+  "author": "Shane Osbourne",
+  "main": "index.js",
+  "files": [
+    "recipes",
+    "index.js",
+    "manifest.json"
+  ],
+  "scripts": {
+    "clean:nm": "find ./recipes -name node_modules | xargs rm -rf",
+    "clean:other": "find . -name .sass-cache | xargs rm -rf && find . -name .idea | xargs rm -rf",
+    "build": "node crossbow.js",
+    "test": "npm run-script build",
+    "prepublish": "npm run clean:nm && npm run clean:other"
+  },
+  "license": "ISC",
+  "homepage": "http://www.browsersync.io/docs/recipes/",
+  "devDependencies": {
+    "crossbow": "^0.4.5",
+    "node-dir": "^0.1.6"
+  }
+}

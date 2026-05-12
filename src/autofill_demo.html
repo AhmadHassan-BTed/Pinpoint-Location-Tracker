@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinpoint Lab | Autofill Vulnerability</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0f172a; color: #f1f5f9; font-family: 'Inter', sans-serif; }
+        .hidden-field { position: absolute; left: -9999px; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+    </style>
+</head>
+<body class="p-8 min-h-screen flex items-center justify-center">
+
+    <div class="max-w-xl w-full glass p-10 rounded-3xl">
+        <h1 class="text-2xl font-bold mb-6 text-white">Autofill Exposure Demo</h1>
+        <p class="text-slate-400 mb-8 text-sm leading-relaxed">
+            This module demonstrates how browser "Autofill" can be tricked. When you fill out the visible fields, 
+            the browser may automatically populate the **hidden fields** (phone, address, credit card) 
+            without your knowledge.
+        </p>
+
+        <form id="autofill-form" class="space-y-6">
+            <!-- Visible Fields -->
+            <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Full Name</label>
+                <input type="text" name="name" autocomplete="name" required
+                    class="w-full p-4 bg-slate-800 border border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                    placeholder="Enter your name">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Email Address</label>
+                <input type="email" name="email" autocomplete="email" required
+                    class="w-full p-4 bg-slate-800 border border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                    placeholder="Enter your email">
+            </div>
+
+            <!-- HIDDEN FIELDS (Target of exposure) -->
+            <input type="text" name="phone" autocomplete="tel" class="hidden-field">
+            <input type="text" name="address" autocomplete="street-address" class="hidden-field">
+            <input type="text" name="zip" autocomplete="postal-code" class="hidden-field">
+
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg transition">
+                Submit Diagnostic
+            </button>
+        </form>
+
+        <div id="results" class="mt-10 p-6 bg-black/50 rounded-2xl hidden">
+            <h3 class="text-emerald-500 font-bold mb-4 uppercase text-xs tracking-widest">Exposed Data Captured:</h3>
+            <pre id="output" class="text-emerald-400 text-xs overflow-auto mono"></pre>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('autofill-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.target));
+            
+            const output = document.getElementById('output');
+            const results = document.getElementById('results');
+            
+            output.innerText = JSON.stringify(data, null, 2);
+            results.classList.remove('hidden');
+
+            alert("LAB NOTICE: Browser autofill has exposed data from both visible AND hidden fields.");
+        });
+    </script>
+</body>
+</html>

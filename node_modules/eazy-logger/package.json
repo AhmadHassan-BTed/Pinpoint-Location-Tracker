@@ -1,0 +1,50 @@
+{
+  "name": "eazy-logger",
+  "description": "Simple cli logger",
+  "version": "4.1.0",
+  "homepage": "https://github.com/shakyshane/easy-logger",
+  "author": {
+    "name": "Shane Osbourne"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/shakyshane/easy-logger.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shakyshane/easy-logger/issues"
+  },
+  "licenses": [
+    {
+      "type": "Apache 2.0",
+      "url": "https://github.com/shakyshane/easy-logger/blob/master/LICENSE"
+    }
+  ],
+  "files": [
+    "index.js",
+    "lodash.custom.js",
+    "example.js"
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "lint": "jshint index.js test/*.js",
+    "test": "npm run lint && mocha",
+    "lodash": "lodash include=cloneDeep,merge exports=node"
+  },
+  "dependencies": {
+    "chalk": "4.1.2"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "jshint": "^2.6.0",
+    "lodash-cli": "4.12.0",
+    "mocha": "^10.2.0",
+    "sinon": "^1.12.2",
+    "strip-ansi": "^6.0.1"
+  },
+  "keywords": [
+    "plugins"
+  ]
+}
