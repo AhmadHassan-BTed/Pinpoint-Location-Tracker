@@ -7,6 +7,7 @@
 [![Version](https://img.shields.io/badge/Version-3.2.0-ffcc00.svg?style=flat-square)](#)
 [![Threat Levels](https://img.shields.io/badge/Threat_Levels-1--4-ff003c.svg?style=flat-square)](#)
 [![Developer](https://img.shields.io/badge/Lead_Developer-Ahmad_Hassan_(B--Ted)-9d00ff.svg?style=flat-square)](https://github.com/AhmadHassan-BTed)
+[![Live Demo](https://img.shields.io/badge/View_Live-DeAnonymizer-00ff41?style=for-the-badge&logo=target)](https://AhmadHassan-BTed.github.io/Pinpoint-Location-Tracker/)
 
 **Engineered by Ahmad Hassan (B-Ted)**
 
