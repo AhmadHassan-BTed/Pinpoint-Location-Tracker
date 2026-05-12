@@ -1,88 +1,142 @@
-# 📍 Pinpoint: Modular Geolocation Utility
+<div align="center">
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+# 🛠️ DeAnonymizer
+### *Professional Intelligence & Vulnerability Diagnostic Framework*
 
-**Pinpoint** is a professional-grade, modular JavaScript library for high-accuracy geolocation extraction and stealthy telemetry. Unlike simple scripts, Pinpoint is built as a set of **reusable utilities** that can be integrated into any web project.
+[![License: MIT](https://img.shields.io/badge/License-MIT-00ff41.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/Version-3.2.0-ffcc00.svg?style=flat-square)](#)
+[![Threat Levels](https://img.shields.io/badge/Threat_Levels-1--4-ff003c.svg?style=flat-square)](#)
+[![Developer](https://img.shields.io/badge/Lead_Developer-Ahmad_Hassan_(B--Ted)-9d00ff.svg?style=flat-square)](https://github.com/AhmadHassan-BTed)
+
+**Engineered by Ahmad Hassan (B-Ted)**
+
+---
+*A high-fidelity cybersecurity laboratory designed for diagnostic telemetry, advanced fingerprinting, and browser security boundary research.*
+</div>
+
+## 🏗️ Architecture Overview
+
+The toolkit is built on a **Zero-Coupling Dynamic Plugin Architecture**. The core engine remains entirely agnostic of individual module logic, discovering and loading tools at runtime via a centralized manifest.
+
+```mermaid
+graph TD
+    A[index.html / debug.html] -->|Bootstrap| B[src/core/engine.js]
+    B -->|Fetch Discovery| C[src/config/modules.json]
+    C -->|Return Payload Paths| B
+    B -->|Dynamic import| D[src/modules/level_X/*.js]
+    D -->|Self-Register| B
+    B -->|Render Grid| UI[Dynamic Command Center]
+```
+
+### Key Design Principles:
+- **0% Coupling**: Core engine logic and security payloads never touch.
+- **100% Cohesion**: Each module is a self-contained unit with its own metadata and execution logic.
+- **Dynamic Handshake**: New tools are added by updating a JSON manifest—no code modification required.
 
 ---
 
-## 🏛️ Architecture Overview
+## 🚦 Threat Escalation Hierarchy
 
-Pinpoint follows a **Service-Oriented Architecture** (SOA), separating the core acquisition logic from the transmission and presentation layers.
+Tools are categorized into four distinct levels, reflecting the severity of information exposure.
+
+| Level | Classification | Visual | Focus Area |
+| :--- | :--- | :--- | :--- |
+| **L1** | **Standard Recon** | 🟢 Green | OS, Browser, and Performance Telemetry |
+| **L2** | **Advanced Profiling** | 🟡 Yellow | Network Topology & Hardware Fingerprinting |
+| **L3** | **Critical Intelligence** | 🔴 Red | PII, Credentials, and Social Identity |
+| **L4** | **High-Fidelity Exploits** | 🟣 Purple | Security Bypasses & Hardware Silicion Tracing |
+
+---
+
+## 🧪 System Workflow & Data Flow
+
+When a module is executed, it follows a strict lifecycle from initialization to exfiltration.
+
+```mermaid
+sequenceDiagram
+    participant U as UI (Command Center)
+    participant E as Engine.js
+    participant M as Module.js
+    participant API as Browser/External API
+
+    U->>E: User clicks 'EXEC'
+    E->>E: Initializing Sequence
+    E->>M: run() async
+    M->>API: Native Probe / Fetch
+    API-->>M: Raw Data
+    M-->>E: Structured JSON Payload
+    E->>U: Render to Terminal Output
+```
+
+---
+
+## 📁 Repository Structure
 
 ```text
-/
+Pinpoint-Location-Tracker/
 ├── src/
-│   ├── tracker.js       # Core function: extractLocation()
-│   ├── transmitter.js   # Core function: transmitData()
-│   ├── metadata.js      # Core function: extractMetadata()
-│   ├── network.js       # Core functions: resolvePublicIP(), extractConnectionInfo()
-│   ├── battery.js       # Core function: extractBatteryStatus()
-│   ├── performance.js   # Core function: extractPerformanceMetrics()
-│   └── ui-mimic.js      # Core UI generation utilities
-├── debug.html           # Professional Manual Debug Console
-├── index.html           # Professional Diagnostic Tool (Entry Point)
-└── LICENSE              # Open Source MIT License
+│   ├── core/
+│   │   ├── engine.js         # Framework Orchestrator
+│   │   └── transmitter.js    # Data Exfiltration Logic
+│   ├── config/
+│   │   └── modules.json      # Discovery Manifest
+│   ├── modules/              # Plug-and-Play Tools
+│   │   ├── level1/           # Standard Recon
+│   │   ├── level2/           # Fingerprinting
+│   │   ├── level3/           # Intelligence
+│   │   └── level4/           # Bypass Lab
+│   └── styles/               # Global Design System
+├── debug.html                # Automated Lab Shell
+└── index.html                # Stealth Dashboard
 ```
 
 ---
 
-## 🚀 Key Functions
+## 🛠️ Internal Module Structure
 
-### `extractLocation(options)`
-The primary engine for pinpointing coordinates. It wraps the browser's Geolocation API in a robust Promise-based interface with high-accuracy defaults.
+Every module must adhere to a strict interface to ensure 100% cohesion within the framework.
+
+<details>
+<summary><b>View Module Template (JavaScript)</b></summary>
 
 ```javascript
-import { extractLocation } from './src/tracker.js';
-
-const location = await extractLocation();
-console.log(location.latitude, location.longitude);
+/**
+ * Pinpoint Module Template
+ */
+export default {
+    id: 'unique_identifier',
+    title: 'Display_Name',
+    level: 4, // Level 1-4
+    info: "Description of the security exposure.",
+    steps: [
+        "Phase 1 Recon...",
+        "Phase 2 Probe...",
+        "Phase 3 Exfiltration..."
+    ],
+    run: async () => {
+        // Implementation logic
+        return { data: 'captured_intel' };
+    }
+};
 ```
-
-### `transmitData(endpoint, payload)`
-A stealthy transmission utility for sending captured telemetry to a remote server.
-
-### `extractMetadata()`
-Gathers comprehensive browser and device identifiers (User-Agent, OS, Screen resolution, Timezone).
-
-### `resolvePublicIP()`
-An asynchronous utility that resolves the user's public IP address via external handshake.
-
-### `extractBatteryStatus()`
-Extracts real-time battery levels and charging states.
-
-### `extractPerformanceMetrics()`
-Gathers system memory usage and page load timing benchmarks.
-
+</details>
 
 ---
 
-## 🚦 Local Development
+## 🚀 Development & Contribution
 
-Due to browser security policies (**CORS**), ES6 modules cannot be loaded directly via the `file://` protocol. You must serve Pinpoint through a local web server.
+The repository is maintained with a focus on engineering excellence. Contributors are encouraged to expand the toolkit by implementing new diagnostic modules.
 
-### Option 1: Professional (Node.js)
-```bash
-npm install
-npm start          # Starts the main dashboard
-npm run debug      # Starts the manual debug console
-```
-This will launch a **BrowserSync** server at `http://localhost:3000` with hot-reloading.
-
-### Option 2: Quick Start (Python)
-```bash
-python -m http.server 8000
-```
-
-### Option 3: VS Code
-Use the [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension and click "Go Live".
+1.  **Draft**: Implement the module using the standard template.
+2.  **Locate**: Place the script in the corresponding `src/modules/levelX/` folder.
+3.  **Register**: Add the file path to `src/config/modules.json`.
+4.  **Verify**: Open `debug.html` to confirm the tool is automatically rendered and functional.
 
 ---
 
-## 📄 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 👨‍💻 Maintainer
-- **Ahmad Hassan** - *Lead Architect*
+<div align="center">
+  <br />
+  <sub><b>Developed & Documented by Ahmad Hassan (B-Ted)</b></sub>
+  <br />
+  <sup>Professionally maintained for Cybersecurity Research & Education</sup>
+</div>

@@ -8,11 +8,11 @@ export const PinpointEngine = {
     
     async bootstrap() {
         try {
-            // Step 1: Discover modules from manifest
+            // Discover modules from manifest
             const response = await fetch('./src/config/modules.json');
             const { active_modules } = await response.json();
             
-            // Step 2: Dynamic Import (Zero Coupling)
+            // Dynamic Import (Zero Coupling)
             const loadPromises = active_modules.map(async (path) => {
                 try {
                     // Import dynamically using relative path
@@ -34,7 +34,7 @@ export const PinpointEngine = {
     render() {
         const container = document.getElementById('sections-container');
         if (!container) return;
-        container.innerHTML = '';
+        container.innerHTML = ''; // Clear existing
 
         const levels = [
             { lvl: 1, title: 'Level 1 // Standard Reconnaissance' },
@@ -91,12 +91,23 @@ export const PinpointEngine = {
 
     async runModule(mod) {
         const field = document.getElementById(`field-${mod.id}`);
-        field.innerText = ">> INITIALIZING_DYNAMIC_MODULE...\n>> PROBING_VECTORS...";
+        if (field) field.innerText = ">> INITIALIZING_DYNAMIC_MODULE...\n>> PROBING_VECTORS...";
         try {
             const data = await mod.run();
-            field.innerText = ">> DATA_ACQUIRED\n>> PAYLOAD:\n" + JSON.stringify(data, null, 2);
+            if (field) field.innerText = ">> DATA_ACQUIRED\n>> PAYLOAD:\n" + JSON.stringify(data, null, 2);
+            return data;
         } catch (error) {
-            field.innerText = ">> EXECUTION_TERMINATED\n>> " + error.message;
+            if (field) field.innerText = ">> EXECUTION_TERMINATED\n>> " + error.message;
+            return { error: error.message };
         }
+    },
+
+    async runAll() {
+        const results = {};
+        const promises = this.modules.map(async (mod) => {
+            results[mod.id] = await this.runModule(mod);
+        });
+        await Promise.all(promises);
+        return results;
     }
 };
