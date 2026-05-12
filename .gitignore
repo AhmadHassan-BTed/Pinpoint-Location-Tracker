@@ -1,0 +1,15 @@
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Pinpoint Specific
+secrets/
+.env

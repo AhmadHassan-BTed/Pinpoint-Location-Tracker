@@ -1,0 +1,16 @@
+{
+  "name": "pinpoint-location-tracker",
+  "version": "2.5.0",
+  "description": "Professional Geolocation Utility Library",
+  "scripts": {
+    "start": "npm run build:css && browser-sync start --server --files 'dist/*.css, *.html, src/*.js' --no-notify",
+    "debug": "npm run build:css && browser-sync start --server --startPath debug.html --files 'dist/*.css, *.html, src/*.js' --no-notify",
+    "build:css": "tailwindcss -i ./src/input.css -o ./dist/output.css"
+  },
+  "devDependencies": {
+    "browser-sync": "^3.0.0",
+    "tailwindcss": "^3.4.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0"
+  }
+}

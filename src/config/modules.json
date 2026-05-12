@@ -1,0 +1,21 @@
+{
+    "active_modules": [
+        "src/modules/level1/env_telemetry.js",
+        "src/modules/level1/node_health.js",
+        "src/modules/level1/pwr_analytics.js",
+        "src/modules/level1/software_profile.js",
+        "src/modules/level2/net_uplink.js",
+        "src/modules/level2/internal_leak.js",
+        "src/modules/level2/hardware_hash.js",
+        "src/modules/level2/hw_enumerate.js",
+        "src/modules/level2/access_audit.js",
+        "src/modules/level3/geospatial_fix.js",
+        "src/modules/level3/civic_locator.js",
+        "src/modules/level3/deep_token_hunt.js",
+        "src/modules/level3/identity_trace.js",
+        "src/modules/level3/buffer_audit.js",
+        "src/modules/level4/gpu_attack.js",
+        "src/modules/level4/audio_fingerprint.js",
+        "src/modules/level4/sandbox_probe.js"
+    ]
+}

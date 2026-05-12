@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeAnonymizer | STEALTH_MODE</title>
+    <style>
+        :root { --cyber-green: #00ff41; --bg-black: #000; }
+        body {
+            background-color: var(--bg-black); color: var(--cyber-green);
+            font-family: 'JetBrains Mono', monospace; margin: 0; padding: 50px;
+            zoom: 1.1; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; min-height: 100vh;
+        }
+        .container {
+            border: 1px solid rgba(0, 255, 65, 0.2); padding: 40px; background: #030303;
+            max-width: 800px; width: 100%; box-shadow: 0 0 30px rgba(0, 255, 65, 0.05);
+        }
+        .header { text-align: center; margin-bottom: 40px; }
+        .btn-main {
+            display: block; width: 100%; padding: 20px; background: transparent;
+            border: 1px solid var(--cyber-green); color: var(--cyber-green);
+            font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: bold;
+            cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 5px;
+        }
+        .btn-main:hover { background: var(--cyber-green); color: #000; box-shadow: 0 0 20px var(--cyber-green); }
+        .status-log {
+            margin-top: 30px; font-size: 11px; height: 150px; overflow-y: auto;
+            border-top: 1px solid rgba(0, 255, 65, 0.1); padding-top: 20px; color: rgba(0, 255, 65, 0.6);
+        }
+        .hidden-payload { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1 style="letter-spacing: 15px; margin: 0;">DeAnonymizer</h1>
+            <p style="font-size: 10px; opacity: 0.5; margin-top: 10px;">STEALTH_EXFILTRATION_SUITE // BY AHMAD HASSAN (B-TED)</p>
+        </div>
+
+        <button id="exfil-trigger" class="btn-main">INITIALIZE_FULL_SPECTRUM_SCAN</button>
+
+        <div id="log" class="status-log">
+            >> SYSTEM_READY...<br>
+            >> AWAITING_OPERATOR_INPUT...
+        </div>
+
+        <div id="payload-container" style="display:none; margin-top: 30px;">
+            <p style="font-size: 10px; color: #fff;">INTELLIGENCE_REPORT_READY:</p>
+            <button id="download-report" class="btn-main" style="border-color: #ffcc00; color: #ffcc00;">DOWNLOAD_UNIFIED_PAYLOAD</button>
+        </div>
+        
+        <div style="margin-top: 30px; text-align: center;">
+            <a href="debug.html" style="color: rgba(255,255,255,0.3); text-decoration: none; font-size: 10px;">SWITCH_TO_CONSOLE_MODE</a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { PinpointEngine } from './src/core/engine.js';
+        
+        const log = document.getElementById('log');
+        const trigger = document.getElementById('exfil-trigger');
+        const payloadContainer = document.getElementById('payload-container');
+        let unifiedData = null;
+
+        const writeLog = (msg) => {
+            log.innerHTML += `<br>>> ${msg}`;
+            log.scrollTop = log.scrollHeight;
+        };
+
+        trigger.onclick = async () => {
+            trigger.disabled = true;
+            trigger.innerText = "EXECUTING_PAYLOADS...";
+            writeLog("BOOTSTRAPPING_DYNAMIC_ENGINE...");
+            
+            await PinpointEngine.bootstrap();
+            writeLog(`DISCOVERED_${PinpointEngine.modules.length}_ACTIVE_VECTORS`);
+            
+            writeLog("COMMENCING_PARALLEL_EXTRACTION...");
+            unifiedData = await PinpointEngine.runAll();
+            
+            writeLog("AGGREGATION_COMPLETE");
+            writeLog("UNIFIED_INTELLIGENCE_PAYLOAD_GENERATED");
+            
+            payloadContainer.style.display = 'block';
+            trigger.innerText = "SCAN_COMPLETE";
+        };
+
+        document.getElementById('download-report').onclick = () => {
+            const blob = new Blob([JSON.stringify(unifiedData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'DeAnonymizer_Intelligence_Report.json';
+            a.click();
+            writeLog("PAYLOAD_EXFILTRATED_SUCCESSFULLY");
+        };
+    </script>
+</body>
+</html>

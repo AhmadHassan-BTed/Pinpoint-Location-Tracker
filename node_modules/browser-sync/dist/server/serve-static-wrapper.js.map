@@ -1,0 +1,1 @@
+{"version":3,"file":"serve-static-wrapper.js","sourceRoot":"","sources":["../../lib/server/serve-static-wrapper.ts"],"names":[],"mappings":";;AAAA;IACI,MAAM,WAAW,GAAG,OAAO,CAAC,cAAc,CAAC,CAAC;IAE5C;;;OAGG;IACH,MAAM,IAAI,GAAG,OAAO,CAAC,MAAM,CAAC,CAAC;IAC7B,IAAI,CAAC,IAAI,CAAC,MAAM,CAAC,EAAE,kBAAkB,EAAE,CAAC,MAAM,CAAC,EAAE,CAAC,CAAC;IAEnD,OAAO,WAAW,CAAC;AACvB,CAAC;AAXD,4BAWC"}
